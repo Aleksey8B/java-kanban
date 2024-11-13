@@ -1,17 +1,25 @@
 package Tasks;
 
 public class Task {
-    private final int id;
-    private String name;
-    private String description;
-    private TaskStatuses status;
+    protected int id;
+    protected String name;
+    protected String description;
+    protected TaskStatus status;
 
-    public Task( int id, String name, String description) {
-        this.id = id;
+    public Task(String name, String description) {
         this.name = name;
         this.description = description;
-        this.status = TaskStatuses.NEW;
+        this.status = TaskStatus.NEW;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
@@ -28,16 +36,12 @@ public class Task {
         this.description = description;
     }
 
-    public TaskStatuses getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(TaskStatuses status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
-    }
-
-    public int getId() {
-        return id;
     }
 
     @Override
