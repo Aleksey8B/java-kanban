@@ -1,9 +1,9 @@
 
-import Manager.TaskManager;
-import Tasks.Epic;
-import Tasks.SubTask;
-import Tasks.Task;
-import Tasks.TaskStatus;
+import manager.TaskManager;
+import tasks.Epic;
+import tasks.SubTask;
+import tasks.Task;
+import tasks.TaskStatus;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,12 +28,17 @@ public class Main {
         System.out.println(taskManager.getEpics());
         System.out.println(taskManager.getSubTasks());
 
-        taskManager.updateTaskStatus(task1, TaskStatus.DONE);
-        taskManager.updateSubTaskStatus(subTask1,TaskStatus.DONE);
-        taskManager.updateSubTaskStatus(subTask1,TaskStatus.IN_PROGRESS);
-        taskManager.updateSubTaskStatus(subTask2,TaskStatus.IN_PROGRESS);
-        taskManager.updateSubTaskStatus(subTask2,TaskStatus.DONE);
-        taskManager.updateSubTaskStatus(subTask3,TaskStatus.DONE);
+        task1.setStatus(TaskStatus.DONE);
+        taskManager.updateTask(task1);
+
+        subTask1.setStatus(TaskStatus.DONE);
+        subTask2.setStatus(TaskStatus.IN_PROGRESS);
+        taskManager.updateSubTask(subTask1);
+        taskManager.updateSubTask(subTask2);
+
+        subTask3.setStatus(TaskStatus.DONE);
+        taskManager.updateSubTask(subTask3);
+
         System.out.println(taskManager.getEpics());
         taskManager.removeTaskById(task1.getId());
         taskManager.removeSubTaskById(subTask3.getId());
