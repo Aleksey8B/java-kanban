@@ -33,8 +33,8 @@ public  class TaskManager {
         subTask.setEpicId(epic.getId());
         epic.addSubTask(subTask.getId());
         subTasks.put(subTask.getId(),subTask);
+        updateEpicStatus(epic);
         updateEpic(epic);
-        epics.put(epic.getId(),epic);
     }
 
     public ArrayList<Object> getAllTasks() {
@@ -104,7 +104,7 @@ public  class TaskManager {
     }
 
     public void updateSubTask(SubTask subTask) {
-        updateEpic(epics.get(subTask.getEpicId()));
+        updateEpicStatus(epics.get(subTask.getEpicId()));
         subTasks.put(subTask.getId(),subTask);
     }
 
