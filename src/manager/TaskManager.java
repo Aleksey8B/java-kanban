@@ -3,178 +3,56 @@ package manager;
 import tasks.Epic;
 import tasks.SubTask;
 import tasks.Task;
-import tasks.TaskStatus;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
-public  class TaskManager {
-    private int tasksId = 0;
-    private final HashMap<Integer, Task> tasks = new HashMap<>();
-    private final HashMap<Integer, Epic> epics = new HashMap<>();
-    private final HashMap<Integer, SubTask> subTasks = new HashMap<>();
+public interface TaskManager {
 
-    private int getTasksId() {
-        return tasksId++;
-    }
+    //int getTasksId();
 
-    public void addTask(Task task) {
-        task.setId(getTasksId());
-        tasks.put(task.getId(),task);
-    }
+    void addTask(Task task);
 
-    public void addEpic(Epic epic) {
-        epic.setId(getTasksId());
-        epics.put(epic.getId(), epic);
-    }
+    void addEpic(Epic epic);
 
-    public void addSubTask(SubTask subTask, Epic epic) {
-        subTask.setId(getTasksId());
-        subTask.setEpicId(epic.getId());
-        epic.addSubTask(subTask.getId());
-        subTasks.put(subTask.getId(),subTask);
-        updateEpicStatus(epic);
-        updateEpic(epic);
-    }
+    void addSubTask(SubTask subTask, Epic epic);
 
-    public ArrayList<Object> getAllTasks() {
-        ArrayList<Object> allTasks = new ArrayList<>();
-        for (int i = 1; i < (tasks.size() + epics.size() + subTasks.size()); i++) {
-            if (tasks.containsKey(i)) {
-                allTasks.add(tasks.get(i));
-            } else if (epics.containsKey(i)) {
-                allTasks.add(epics.get(i));
-            } else if (subTasks.containsKey(i)) {
-                allTasks.add(subTasks.get(i));
-            }
-        }
-        return allTasks;
-    }
+    ArrayList<Task> getAllTasks();
 
-    public ArrayList<Task> getTasks() {
-        if (tasks.isEmpty()) {
-            return new ArrayList<>();
-        }
-        return new ArrayList<>(tasks.values());
-    }
+    ArrayList<Task> getTasks();
 
-    public ArrayList<Epic> getEpics() {
-        if (epics.isEmpty()) {
-            return new ArrayList<>();
-        }
-        return new ArrayList<>(epics.values());
-    }
+    ArrayList<Epic> getEpics();
 
-    public ArrayList<SubTask> getSubTasks() {
-        if (subTasks.isEmpty()) {
-            return new ArrayList<>();
-        }
-        return new ArrayList<>(subTasks.values());
-    }
+    ArrayList<SubTask> getSubTasks();
 
-    public void updateTask(Task task) {
-        tasks.put(task.getId(),task);
-    }
+    void updateTask(Task task);
 
-    public void updateEpic(Epic epic) {
-        epics.put(epic.getId(),epic);
-    }
+    void updateEpic(Epic epic);
 
-    private void updateEpicStatus(Epic epic) {
-        ArrayList<SubTask> epicSubTasks = getEpicsSubTasks(epic);
-        int doneSubCount = 0;
-        if (!epicSubTasks.isEmpty()){
-            for(SubTask subTask : epicSubTasks) {
-                if (subTask.getStatus().equals(TaskStatus.DONE)){
-                    doneSubCount++;
-                }
-            }
-            if (doneSubCount < epicSubTasks.size()) {
-                epic.setStatus(TaskStatus.IN_PROGRESS);
-            } else if (doneSubCount == epicSubTasks.size()) {
-                epic.setStatus(TaskStatus.DONE);
-            }
-        } else {
-            if (!epic.getSubTasksId().isEmpty()) {
-                epic.clearSubTasksId();
-            }
-            epic.setStatus(TaskStatus.NEW);
-        }
-        updateEpic(epic);
-    }
+    void updateEpicStatus(Epic epic);
 
-    public void updateSubTask(SubTask subTask) {
-        updateEpicStatus(epics.get(subTask.getEpicId()));
-        subTasks.put(subTask.getId(),subTask);
-    }
+    void updateSubTask(SubTask subTask);
 
-    public Task getTaskById(int taskId) {
-        if (tasks.containsKey(taskId)) return tasks.get(taskId);
-        return null;
-    }
+    Task getTaskById(int taskId);
 
-    public Epic getEpicById(int epicId) {
-        if (epics.containsKey(epicId)) return epics.get(epicId);
-        return null;
-    }
+    Epic getEpicById(int epicId);
 
-    public SubTask getSubTaskById(int subTaskId) {
-        if (subTasks.containsKey(subTaskId)) return subTasks.get(subTaskId);
-        return null;
-    }
+    SubTask getSubTaskById(int subTaskId);
 
-    public ArrayList<SubTask> getEpicsSubTasks(Epic epic) {
-        ArrayList<SubTask> epicsSubTasks = new ArrayList<>();
-        if(!subTasks.isEmpty()) {
-            for (int subId : epic.getSubTasksId()) {
-                epicsSubTasks.add(subTasks.get(subId));
-            }
-        }
-        return epicsSubTasks;
-    }
+    ArrayList<SubTask> getEpicsSubTasks(Epic epic);
 
-    public void removeTaskById(int taskId) {
-        tasks.remove(taskId);
-    }
+    void removeTaskById(int taskId);
 
-    public void removeEpicById(int epicId) {
-        ArrayList<SubTask> tmp = new ArrayList<>(subTasks.values());
-        for (SubTask subTask : tmp) {
-            if (subTask.getEpicId() == epicId){
-                subTasks.remove(subTask.getId());
-            }
-        }
-        epics.remove(epicId);
-    }
+    void removeEpicById(int epicId);
 
-    public void removeSubTaskById(int subTaskId) {
-        SubTask subTask = subTasks.get(subTaskId);
-        Epic epic = epics.get(subTask.getEpicId());
-        epic.removeSubTask(subTaskId);
-        updateEpicStatus(epic);
-        subTasks.remove(subTaskId);
-    }
+    void removeSubTaskById(int subTaskId);
 
-    public void deleteTasks() {
-        tasks.clear();
-    }
+    void deleteTasks();
 
-    public void deleteEpics() {
-        if(!epics.isEmpty()) {
-            epics.clear();
-        }
-        if (!subTasks.isEmpty()) {
-            deleteSubTasks();
-        }
-    }
+    void deleteEpics();
 
-    public void deleteSubTasks() {
-        if (!subTasks.isEmpty()) {
-            subTasks.clear();
-        }
-        for (Epic epic : epics.values()) {
-            epic.clearSubTasksId();
-            updateEpicStatus(epic);
-        }
-    }
+    void deleteSubTasks();
+
+    List<Task> getHistory();
+
 }

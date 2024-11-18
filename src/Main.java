@@ -1,4 +1,4 @@
-
+import manager.Manager;
 import manager.TaskManager;
 import tasks.Epic;
 import tasks.SubTask;
@@ -7,7 +7,7 @@ import tasks.TaskStatus;
 
 public class Main {
     public static void main(String[] args) {
-        TaskManager taskManager = new TaskManager();
+        TaskManager taskManager = Manager.getDefault();
         Task task1 = new Task("Task 1", "Task 1 description");
         Task task2 = new Task("Task 2", "Task 2 description");
         Epic epic1 = new Epic("Epic 1", "Epic 1 description");
@@ -40,13 +40,24 @@ public class Main {
         taskManager.updateSubTask(subTask3);
 
         System.out.println(taskManager.getEpics());
-        taskManager.removeTaskById(task1.getId());
-        taskManager.removeSubTaskById(subTask3.getId());
-        taskManager.removeEpicById(epic1.getId());
+        //taskManager.removeTaskById(task1.getId());
+        //taskManager.removeSubTaskById(subTask3.getId());
+        //taskManager.removeEpicById(epic1.getId());
 
         System.out.println(taskManager.getTasks());
         System.out.println(taskManager.getEpics());
         System.out.println(taskManager.getSubTasks());
+
+        System.out.println("\n");
+        System.out.println(taskManager.getTaskById(task1.getId()));
+        System.out.println(taskManager.getEpicById(epic1.getId()));
+        System.out.println(taskManager.getSubTaskById(subTask1.getId()));
+        System.out.println(taskManager.getTaskById(task1.getId()));
+        System.out.println("\n");
+        System.out.println(taskManager.getHistory());
+        System.out.println("getAllTasks: \n");
+        System.out.println(taskManager.getAllTasks());
+
 
     }
 }
