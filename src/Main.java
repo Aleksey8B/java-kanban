@@ -20,10 +20,17 @@ public class Main {
         taskManager.addTask(task2);
         taskManager.addEpic(epic1);
         taskManager.addEpic(epic2);
-        taskManager.addSubTask(subTask1,epic1);
-        taskManager.addSubTask(subTask2,epic1);
-        taskManager.addSubTask(subTask3,epic2);
-
+        subTask1.setEpicId(epic1);
+        subTask2.setEpicId(epic1);
+        subTask3.setEpicId(epic2);
+        taskManager.addSubTask(subTask1);
+        taskManager.addSubTask(subTask2);
+        taskManager.addSubTask(subTask3);
+        epic1.addSubTask(subTask1);
+        epic1.addSubTask(subTask2);
+        epic2.addSubTask(subTask3);
+        taskManager.updateEpic(epic1);
+        taskManager.updateEpic(epic2);
         System.out.println(taskManager.getTasks());
         System.out.println(taskManager.getEpics());
         System.out.println(taskManager.getSubTasks());
