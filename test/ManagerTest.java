@@ -11,7 +11,7 @@ import tasks.Task;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-public class TaskTest {
+public class ManagerTest {
     static TaskManager taskManager;
     static HistoryManager historyManager;
     Task task1;
@@ -20,6 +20,7 @@ public class TaskTest {
     Epic epic2;
     SubTask subTask1;
     SubTask subTask2;
+
     @BeforeAll
     public static void beforeAll() {
         taskManager = Manager.getDefault();
@@ -39,27 +40,6 @@ public class TaskTest {
     public void managersShouldBeNotNull() {
         assertNotNull(taskManager);
         assertNotNull(historyManager);
-    }
-
-    @Test
-    public void tasksShouldBeEqualsById() {
-        task1.setId(3);
-        task2.setId(3);
-        assertEquals(task1,task2);
-    }
-
-    @Test
-    public void epicsShouldBeEqualsById() {
-        epic1.setId(1);
-        epic2.setId(1);
-        assertEquals(epic1,epic2);
-    }
-
-    @Test
-    public void subTasksShouldBeEqualsById() {
-        subTask1.setId(10);
-        subTask2.setId(10);
-        assertEquals(subTask1,subTask2);
     }
 
     @Test
@@ -110,5 +90,4 @@ public class TaskTest {
         assertEquals(task1.getDescription(), taskT.getDescription());
         assertEquals(task1.getStatus(), taskT.getStatus());
     }
-
 }
