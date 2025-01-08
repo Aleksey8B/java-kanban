@@ -59,11 +59,12 @@ public class Main {
         System.out.println(taskManager.getTaskById(task1.getId()));
         System.out.println(taskManager.getEpicById(epic1.getId()));
         System.out.println(taskManager.getSubTaskById(subTask1.getId()));
+        System.out.println(taskManager.getTaskById(task2.getId()));
         System.out.println(taskManager.getTaskById(task1.getId()));
-        System.out.println("\n");
+        System.out.println("getHistory: \n");
         System.out.println(taskManager.getHistory());
-        System.out.println("getAllTasks: \n");
-        System.out.println(taskManager.getAllTasks());
+        //System.out.println("getAllTasks: \n");
+        //System.out.println(taskManager.getAllTasks());
 
 
     }
