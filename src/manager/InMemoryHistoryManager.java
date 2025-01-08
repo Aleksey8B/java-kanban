@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-public class InMemoryHistoryManager implements HistoryManager{
+
+public class InMemoryHistoryManager implements HistoryManager {
 
     private static class Node {
         Task task;
@@ -83,7 +84,6 @@ public class InMemoryHistoryManager implements HistoryManager{
             prevNode.next = nextNode;
             nextNode.prev = prevNode;
         }
-
         historySize--;
     }
 
