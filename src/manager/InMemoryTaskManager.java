@@ -100,9 +100,9 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateEpicStatus(Epic epic) {
         ArrayList<SubTask> epicSubTasks = new ArrayList<>(getEpicsSubTasks(epic));
         int doneSubCount = 0;
-        if (!epicSubTasks.isEmpty()){
-            for(SubTask subTask : epicSubTasks) {
-                if (subTask.getStatus().equals(TaskStatus.DONE)){
+        if (!epicSubTasks.isEmpty()) {
+            for (SubTask subTask : epicSubTasks) {
+                if (subTask.getStatus().equals(TaskStatus.DONE)) {
                     doneSubCount++;
                 }
             }
@@ -159,7 +159,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<SubTask> getEpicsSubTasks(Epic epic) {
         ArrayList<SubTask> epicsSubTasks = new ArrayList<>();
-        if(!subTasks.isEmpty()) {
+        if (!subTasks.isEmpty()) {
             for (int subId : epic.getSubTasksId()) {
                 epicsSubTasks.add(subTasks.get(subId));
             }
@@ -176,7 +176,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void removeEpicById(int epicId) {
         ArrayList<SubTask> tmp = new ArrayList<>(subTasks.values());
         for (SubTask subTask : tmp) {
-            if (subTask.getEpicId() == epicId){
+            if (subTask.getEpicId() == epicId) {
                 subTasks.remove(subTask.getId());
             }
         }
@@ -199,7 +199,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteEpics() {
-        if(!epics.isEmpty()) {
+        if (!epics.isEmpty()) {
             epics.clear();
         }
         if (!subTasks.isEmpty()) {
