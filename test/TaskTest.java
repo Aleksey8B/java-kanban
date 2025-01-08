@@ -24,8 +24,6 @@ public class TaskTest {
         subTask2 = new SubTask("2","2");
     }
 
-
-
     @Test
     public void tasksShouldBeEqualsById() {
         task1.setId(3);

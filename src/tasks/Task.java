@@ -1,6 +1,5 @@
 package tasks;
 
-import manager.InMemoryTaskManager;
 
 public class Task {
     protected int id;
