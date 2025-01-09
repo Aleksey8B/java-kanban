@@ -130,7 +130,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Task getTaskById(int taskId) {
         if (tasks.containsKey(taskId)) {
             Task taskTmp = tasks.get(taskId);
-            historyManager.addHistory(taskTmp);
+            historyManager.add(taskTmp);
             return taskTmp;
         }
         return null;
@@ -140,7 +140,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Epic getEpicById(int epicId) {
         if (epics.containsKey(epicId)) {
             Epic epicTmp = epics.get(epicId);
-            historyManager.addHistory(epicTmp);
+            historyManager.add(epicTmp);
             return epicTmp;
         }
         return null;
@@ -150,7 +150,7 @@ public class InMemoryTaskManager implements TaskManager {
     public SubTask getSubTaskById(int subTaskId) {
         if (subTasks.containsKey(subTaskId)) {
             SubTask subTaskTmp = subTasks.get(subTaskId);
-            historyManager.addHistory(subTaskTmp);
+            historyManager.add(subTaskTmp);
             return subTaskTmp;
         }
         return null;
@@ -169,6 +169,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void removeTaskById(int taskId) {
+        historyManager.remove(taskId);
         tasks.remove(taskId);
     }
 
@@ -177,9 +178,11 @@ public class InMemoryTaskManager implements TaskManager {
         ArrayList<SubTask> tmp = new ArrayList<>(subTasks.values());
         for (SubTask subTask : tmp) {
             if (subTask.getEpicId() == epicId) {
+                historyManager.remove(subTask.getId());
                 subTasks.remove(subTask.getId());
             }
         }
+        historyManager.remove(epicId);
         epics.remove(epicId);
     }
 
@@ -189,6 +192,7 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = epics.get(subTask.getEpicId());
         epic.removeSubTask(subTask);
         updateEpicStatus(epic);
+        historyManager.remove(subTaskId);
         subTasks.remove(subTaskId);
     }
 

@@ -82,7 +82,7 @@ public class ManagerTest {
 
     @Test
     void addHistory() {
-        historyManager.addHistory(task1);
+        historyManager.add(task1);
         List<Task> history = historyManager.getHistory();
         assertNotNull(history, "История не пустая.");
         assertEquals(1, history.size(), "История не пустая.");
@@ -90,9 +90,9 @@ public class ManagerTest {
 
     @Test
     void shouldDeletePrevView() {
-        historyManager.addHistory(task1);
-        historyManager.addHistory(task2);
-        historyManager.addHistory(task1);
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task1);
         List<Task> history = historyManager.getHistory();
         assertEquals(task2,history.get(0));
         assertEquals(task1,history.get(1));
@@ -100,9 +100,9 @@ public class ManagerTest {
 
     @Test
     void shouldDeleteFirstView() {
-        historyManager.addHistory(task1);
-        historyManager.addHistory(task2);
-        historyManager.addHistory(epic1);
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(epic1);
 
         historyManager.remove(0);
 
