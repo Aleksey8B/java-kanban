@@ -4,8 +4,6 @@ import tasks.Epic;
 import tasks.SubTask;
 import tasks.Task;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 public class TaskTest {
 
@@ -25,8 +23,6 @@ public class TaskTest {
         subTask1 = new SubTask("1","1");
         subTask2 = new SubTask("2","2");
     }
-
-
 
     @Test
     public void tasksShouldBeEqualsById() {
