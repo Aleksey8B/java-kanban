@@ -11,18 +11,22 @@ public class SubTask extends Task {
         this.epicId = epic.getId();
     }
 
+    public void setEpicId(int epicId) {
+        this.epicId = epicId;
+    }
+
     public int getEpicId() {
         return epicId;
     }
 
     @Override
     public String toString() {
-        return "\nSubTask{" +
-                "id=" + getId() +
-                ", name='" + getName() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", status=" + getStatus() +
-                ", epicId=" + getEpicId() +
-                '}';
+        return String.format("[%d;%s;%s;%s;%s;%d]\n",
+                getId(),
+                getStatus().toString(),
+                getType().toString(),
+                getName(),
+                getDescription(),
+                getEpicId());
     }
 }

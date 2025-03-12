@@ -14,6 +14,10 @@ public class Epic extends Task {
         return subTasksId;
     }
 
+    public void  setSubTasksId(ArrayList<Integer> subTasksIdArr) {
+        subTasksId.addAll(subTasksIdArr);
+    }
+
     public void addSubTask(SubTask subTask) {
         subTasksId.add(subTask.getId());
     }
@@ -28,12 +32,21 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "\nEpic{" +
-                "id=" + getId() +
-                ", name='" + getName() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", status=" + getStatus() +
-                ", subTasksId=" + getSubTasksId() +
-                '}';
+        String strSubTasksId = "";
+        if (!subTasksId.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (Integer id : subTasksId) {
+                sb.append(id);
+                sb.append(',');
+            }
+            strSubTasksId = sb.toString();
+        }
+        return String.format("[%d;%s;%s;%s;%s;;%s]\n",
+                getId(),
+                getStatus().toString(),
+                getType().toString(),
+                getName(),
+                getDescription(),
+                strSubTasksId);
     }
 }

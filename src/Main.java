@@ -1,9 +1,6 @@
-import manager.Manager;
-import manager.TaskManager;
-import tasks.Epic;
-import tasks.SubTask;
-import tasks.Task;
-import tasks.TaskStatus;
+import manager.*;
+import tasks.*;
+import constant.*;
 
 public class Main {
     public static void main(String[] args) {
