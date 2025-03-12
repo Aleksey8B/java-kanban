@@ -41,7 +41,7 @@ public class Epic extends Task {
             }
             strSubTasksId = sb.toString();
         }
-        return String.format("[%d;%s;%s;%s;%s;;%s]\n",
+        return String.format("%d;%s;%s;%s;%s;;%s\n",
                 getId(),
                 getStatus().toString(),
                 getType().toString(),
