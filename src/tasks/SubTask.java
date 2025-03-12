@@ -21,7 +21,7 @@ public class SubTask extends Task {
 
     @Override
     public String toString() {
-        return String.format("[%d;%s;%s;%s;%s;%d]\n",
+        return String.format("%d;%s;%s;%s;%s;%d\n",
                 getId(),
                 getStatus().toString(),
                 getType().toString(),
