@@ -3,7 +3,7 @@ package manager;
 import tasks.Epic;
 import tasks.SubTask;
 import tasks.Task;
-import tasks.TaskStatus;
+import constant.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,9 +12,9 @@ import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
     private int tasksId;
-    private final Map<Integer, Task> tasks;
-    private final Map<Integer, Epic> epics;
-    private final Map<Integer, SubTask> subTasks;
+    protected final Map<Integer, Task> tasks;
+    protected final Map<Integer, Epic> epics;
+    protected final Map<Integer, SubTask> subTasks;
     private final HistoryManager historyManager = Manager.getDefaultHistory();
 
     public InMemoryTaskManager() {

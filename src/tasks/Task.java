@@ -1,6 +1,10 @@
 package tasks;
 
 
+import constant.*;
+
+import java.util.Objects;
+
 public class Task {
     protected int id;
     protected String name;
@@ -45,6 +49,10 @@ public class Task {
         this.status = status;
     }
 
+    public TaskType getType() {
+        return TaskType.TASK;
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
@@ -55,16 +63,16 @@ public class Task {
 
     @Override
     public int hashCode() {
-        return id;
+        return Objects.hash(id,name,description);
     }
 
     @Override
     public String toString() {
-        return "\nTask{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                '}';
+        return String.format("%d;%s;%s;%s;%s\n",
+                getId(),
+                getStatus(),
+                getType(),
+                getName(),
+                getDescription());
     }
 }
