@@ -6,19 +6,17 @@ import tasks.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
 
     public FileBackedTaskManager(File file) {
+        super();
         this.file = file;
     }
 
-    public static void main(String[] args) {
-
-    }
-
-    public static FileBackedTaskManager loadFromFile(File file) {
+    public  FileBackedTaskManager loadFromFile(File file) {
         FileBackedTaskManager manager = new FileBackedTaskManager(file);
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String rawTaskInfo = br.readLine();
@@ -26,9 +24,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 rawTaskInfo = br.readLine();
                 Task task = load(rawTaskInfo);
                 switch (task.getType()) {
-                    case TASK -> manager.addTask(task);
-                    case EPIC -> manager.addEpic((Epic) task);
-                    case SUB_TASK -> manager.addSubTask((SubTask) task);
+                    case TASK -> manager.tasks.put(task.getId(),task);
+                    case EPIC -> manager.epics.put(task.getId(), (Epic) task);
+                    case SUB_TASK -> manager.subTasks.put(task.getId(), (SubTask) task);
                 }
             }
         } catch (IOException e) {
@@ -54,7 +52,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
     }
 
-    private static Task load(String rawTaskInfo) {
+    private Task load(String rawTaskInfo) {
         String[] taskInfo = rawTaskInfo.split(CSVConstant.CSV_DELIMITER);
         int id = Integer.parseInt(taskInfo[0]);
         TaskStatus status = TaskStatus.valueOf(taskInfo[1]);
@@ -107,6 +105,51 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     public void addEpic(Epic epic) {
         super.addEpic(epic);
         save();
+    }
+
+    @Override
+    public List<Task> getAllTasks() {
+        return super.getAllTasks();
+    }
+
+    @Override
+    public List<Task> getTasks() {
+        return super.getTasks();
+    }
+
+    @Override
+    public List<Epic> getEpics() {
+        return super.getEpics();
+    }
+
+    @Override
+    public List<SubTask> getSubTasks() {
+        return super.getSubTasks();
+    }
+
+    @Override
+    public Task getTaskById(int taskId) {
+        return super.getTaskById(taskId);
+    }
+
+    @Override
+    public Epic getEpicById(int epicId) {
+        return super.getEpicById(epicId);
+    }
+
+    @Override
+    public SubTask getSubTaskById(int subTaskId) {
+        return super.getSubTaskById(subTaskId);
+    }
+
+    @Override
+    public List<SubTask> getEpicsSubTasks(Epic epic) {
+        return super.getEpicsSubTasks(epic);
+    }
+
+    @Override
+    public List<Task> getHistory() {
+        return super.getHistory();
     }
 
     @Override

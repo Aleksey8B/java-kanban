@@ -1,5 +1,7 @@
 package tasks;
 
+import constant.TaskType;
+
 import java.util.ArrayList;
 
 public class Epic extends Task {
@@ -31,6 +33,11 @@ public class Epic extends Task {
     }
 
     @Override
+    public TaskType getType() {
+        return TaskType.EPIC;
+    }
+
+    @Override
     public String toString() {
         String strSubTasksId = "";
         if (!subTasksId.isEmpty()) {
@@ -43,8 +50,8 @@ public class Epic extends Task {
         }
         return String.format("%d;%s;%s;%s;%s;;%s\n",
                 getId(),
-                getStatus().toString(),
-                getType().toString(),
+                getStatus(),
+                getType(),
                 getName(),
                 getDescription(),
                 strSubTasksId);

@@ -1,5 +1,7 @@
 package tasks;
 
+import constant.TaskType;
+
 public class SubTask extends Task {
     protected int epicId;
 
@@ -17,6 +19,11 @@ public class SubTask extends Task {
 
     public int getEpicId() {
         return epicId;
+    }
+
+    @Override
+    public TaskType getType() {
+        return TaskType.SUB_TASK;
     }
 
     @Override

@@ -3,21 +3,18 @@ package tasks;
 
 import constant.*;
 
+import java.util.Objects;
+
 public class Task {
     protected int id;
     protected String name;
     protected String description;
     protected TaskStatus status;
-    protected TaskType type;
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
         this.status = TaskStatus.NEW;
-
-        if (this instanceof Epic) this.type = TaskType.EPIC;
-        else if (this instanceof SubTask) this.type = TaskType.SUB_TASK;
-        else this.type = TaskType.TASK;
     }
 
     public void setId(int id) {
@@ -53,7 +50,7 @@ public class Task {
     }
 
     public TaskType getType() {
-        return type;
+        return TaskType.TASK;
     }
 
     @Override
@@ -66,15 +63,15 @@ public class Task {
 
     @Override
     public int hashCode() {
-        return id;
+        return Objects.hash(id,name,description);
     }
 
     @Override
     public String toString() {
         return String.format("%d;%s;%s;%s;%s\n",
                 getId(),
-                getStatus().toString(),
-                getType().toString(),
+                getStatus(),
+                getType(),
                 getName(),
                 getDescription());
     }

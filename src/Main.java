@@ -55,6 +55,5 @@ public class Main {
         System.out.println(taskManager.getTaskById(task2.getId()));
         System.out.println(taskManager.getTaskById(task1.getId()));
         System.out.println(taskManager.getHistory());
-
     }
 }

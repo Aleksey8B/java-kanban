@@ -9,75 +9,49 @@ import constant.*;
 
 public class FileBackedTaskManagerTest {
     private FileBackedTaskManager manager;
+    private FileBackedTaskManager manager2;
     private File file;
 
     @BeforeEach
     void beforeEach() throws IOException {
         file = File.createTempFile(CSVConstant.FILE_NAME, CSVConstant.FILE_EXTENSION);
+    }
+
+    @Test
+    void shouldAddAndSaveAndLoad() {
         manager = new FileBackedTaskManager(file);
-    }
 
-    @AfterEach
-    void afterEach() {
-        file.delete();
-        manager.deleteTasks();
-        manager.deleteEpics();
-        manager.deleteSubTasks();
-    }
-
-    @Test
-    void shouldAddAndSaveTask() {
-        Task task = new Task("Task", "Task description");
-        manager.addTask(task);
-
-        List<Task> tasks = manager.getTasks();
-        assertEquals(1, tasks.size());
-        assertEquals(task, tasks.getFirst());
-
-        manager = FileBackedTaskManager.loadFromFile(file);
-        tasks = manager.getTasks();
-        assertEquals(1, tasks.size());
-        assertEquals(task, tasks.getFirst());
-    }
-
-    @Test
-    void shouldAddAndSaveEpic() {
-        Epic epic = new Epic("Epic", "Epic description");
-        SubTask subTask = new SubTask("SubTask", "SubTask description");
+        Task task1 = new Task("Task1", "Task1 description");
+        Task task2 = new Task("Task2", "Task2 description");
+        Epic epic1 = new Epic("Epic1", "Epic1 description");
+        Epic epic2 = new Epic("Epic2", "Epic2 description");
         SubTask subTask1 = new SubTask("SubTask1", "SubTask1 description");
-        epic.addSubTask(subTask);
-        epic.addSubTask(subTask1);
-        manager.addEpic(epic);
+        SubTask subTask2 = new SubTask("SubTask2", "SubTask2 description");
+        SubTask subTask3 = new SubTask("SubTask2", "SubTask2 description");
 
-        List<Epic> epics = manager.getEpics();
-        assertEquals(1, epics.size());
-        assertEquals(epic, epics.getFirst());
+        manager.addTask(task1);
+        manager.addTask(task2);
+        manager.addEpic(epic1);
+        subTask1.setEpicId(epic1);
+        subTask2.setEpicId(epic1);
+        manager.addSubTask(subTask1);
+        manager.addSubTask(subTask2);
+        epic1.addSubTask(subTask1);
+        epic1.addSubTask(subTask2);
+        manager.updateEpic(epic1);
+        manager.updateSubTask(subTask1);
+        manager.updateSubTask(subTask2);
+        manager.addEpic(epic2);
+        subTask3.setEpicId(epic2);
+        manager.addSubTask(subTask3);
+        epic2.addSubTask(subTask3);
+        manager.updateEpic(epic2);
+        manager.updateSubTask(subTask3);
 
-        manager = FileBackedTaskManager.loadFromFile(file);
-        epics = manager.getEpics();
-        assertEquals(1, epics.size());
-        assertEquals(epic, epics.getFirst());
+        manager2 = manager.loadFromFile(file);
+        final List<Task> taskList1 = manager.getAllTasks();
+        final List<Task> taskList2 = manager2.getAllTasks();
+        assertEquals(taskList1, taskList2);
     }
 
-    @Test
-    void shouldAddAndSaveSubTask() {
-        Epic epic = new Epic("Epic", "Epic description");
-        SubTask subTask = new SubTask("SubTask", "SubTask description");
-
-        manager.addEpic(epic);
-        manager.addSubTask(subTask);
-        epic.addSubTask(subTask);
-        subTask.setEpicId(epic);
-        manager.updateEpic(epic);
-        manager.updateSubTask(subTask);
-
-        List<SubTask> subTasks = manager.getSubTasks();
-        assertEquals(1, subTasks.size());
-        assertEquals(subTask, subTasks.getFirst());
-
-        manager = FileBackedTaskManager.loadFromFile(file);
-        subTasks = manager.getSubTasks();
-        assertEquals(1, subTasks.size());
-        assertEquals(subTask, subTasks.getFirst());
-    }
 }
