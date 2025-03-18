@@ -65,7 +65,7 @@ public class Task {
         int result = id;
         result = 31 * result + Objects.hashCode(name);
         result = 31 * result + Objects.hashCode(description);
-        result = 31 * result + status.hashCode();
+        result = 31 * result + Objects.hashCode(status);
         return result;
     }
 

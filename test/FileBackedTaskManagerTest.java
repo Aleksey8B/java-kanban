@@ -4,7 +4,6 @@ import org.junit.jupiter.api.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import constant.*;

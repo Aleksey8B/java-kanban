@@ -39,21 +39,11 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        String strSubTasksId = "";
-        if (!subTasksId.isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            for (Integer id : subTasksId) {
-                sb.append(id);
-                sb.append(',');
-            }
-            strSubTasksId = sb.toString();
-        }
-        return String.format("%d;%s;%s;%s;%s;;%s\n",
+        return String.format("%d;%s;%s;%s;%s\n",
                 getId(),
                 getStatus(),
                 getType(),
                 getName(),
-                getDescription(),
-                strSubTasksId);
+                getDescription());
     }
 }

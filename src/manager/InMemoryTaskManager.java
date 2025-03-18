@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
-    private int tasksId;
+    protected int tasksId;
     protected final Map<Integer, Task> tasks;
     protected final Map<Integer, Epic> epics;
     protected final Map<Integer, SubTask> subTasks;
@@ -24,15 +24,7 @@ public class InMemoryTaskManager implements TaskManager {
         subTasks = new HashMap<>();
     }
 
-    protected void setTasksId(int tasksId) {
-        this.tasksId = tasksId;
-    }
-
-    protected int getTaskId() {
-        return tasksId;
-    }
-
-    private int getTasksId() {
+    protected int getTasksId() {
         return tasksId++;
     }
 

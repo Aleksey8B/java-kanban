@@ -19,7 +19,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         FileBackedTaskManager manager = new FileBackedTaskManager(file);
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String rawTaskInfo = br.readLine();
-            manager.setTasksId(Integer.parseInt(br.readLine()));
+            manager.tasksId = Integer.parseInt(br.readLine());
             while (br.ready()) {
                 rawTaskInfo = br.readLine();
                 Task task = load(rawTaskInfo);
@@ -29,6 +29,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     case SUB_TASK -> manager.subTasks.put(task.getId(), (SubTask) task);
                 }
             }
+            for (SubTask subTask : manager.getSubTasks()) {
+                Epic epic = manager.getEpicById(subTask.getEpicId());
+                epic.addSubTask(subTask);
+                manager.epics.put(epic.getId(), epic);
+            }
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка загрузки файла!", e);
         }
@@ -36,9 +41,19 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     private void save() {
+        int lastId = 0;
+        for (Task task : getTasks()) {
+            if (lastId < task.getId()) lastId = task.getId();
+        }
+        for (Epic epic : getEpics()) {
+            if (lastId < epic.getId()) lastId = epic.getId();
+        }
+        for (SubTask subTask : getSubTasks()) {
+            if (lastId < subTask.getId()) lastId = subTask.getId();
+        }
         try (FileWriter writer = new FileWriter(file, false)) {
             writer.write(CSVConstant.CSV_HEADER);
-            writer.write(getTaskId() + "\n");
+            writer.write(lastId + "\n");
             for (Task task : getTasks()) {
                 writer.write(task.toString());
             }
@@ -73,14 +88,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 Epic tmpEpic = new Epic(name,description);
                 tmpEpic.setId(id);
                 tmpEpic.setStatus(status);
-                if (!taskInfo[6].isEmpty()) {
-                    String[] subTaskIds = taskInfo[6].split(",");
-                    ArrayList<Integer> arrSubTaskIds = new ArrayList<>();
-                    for (String str : subTaskIds) {
-                        arrSubTaskIds.add(Integer.parseInt(str));
-                    }
-                    tmpEpic.setSubTasksId(arrSubTaskIds);
-                }
                 return tmpEpic;
             }
 
