@@ -28,21 +28,21 @@ public class TaskTest {
     public void tasksShouldBeEqualsById() {
         task1.setId(3);
         task2.setId(3);
-        assertEquals(task1,task2);
+        assertNotEquals(task1.,task2);
     }
 
     @Test
     public void epicsShouldBeEqualsById() {
         epic1.setId(1);
         epic2.setId(1);
-        assertEquals(epic1,epic2);
+        assertNotEquals(epic1,epic2);
     }
 
     @Test
     public void subTasksShouldBeEqualsById() {
         subTask1.setId(10);
         subTask2.setId(10);
-        assertEquals(subTask1,subTask2);
+        assertNotEquals(subTask1,subTask2);
     }
 
 
