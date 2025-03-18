@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import constant.*;
 
 public class FileBackedTaskManagerTest {
@@ -23,6 +25,7 @@ public class FileBackedTaskManagerTest {
 
         Task task1 = new Task("Task1", "Task1 description");
         Task task2 = new Task("Task2", "Task2 description");
+        Task task3 = new Task("Task3", "Task3 description");
         Epic epic1 = new Epic("Epic1", "Epic1 description");
         Epic epic2 = new Epic("Epic2", "Epic2 description");
         SubTask subTask1 = new SubTask("SubTask1", "SubTask1 description");
@@ -48,10 +51,19 @@ public class FileBackedTaskManagerTest {
         manager.updateEpic(epic2);
         manager.updateSubTask(subTask3);
 
-        manager2 = manager.loadFromFile(file);
-        final List<Task> taskList1 = manager.getAllTasks();
-        final List<Task> taskList2 = manager2.getAllTasks();
+        manager2 = FileBackedTaskManager.loadFromFile(file);
+        final List<Task> taskList1 = manager.getTasks();
+        final List<Task> taskList2 = manager2.getTasks();
+        final List<Epic> epicList1 = manager.getEpics();
+        final List<Epic> epicList2 = manager2.getEpics();
+        final List<SubTask> subTaskList1 = manager.getSubTasks();
+        final List<SubTask> subTaskList2 = manager2.getSubTasks();
+        manager.addTask(task3);
+        manager2.addTask(task3);
         assertEquals(taskList1, taskList2);
+        assertEquals(epicList1, epicList2);
+        assertEquals(subTaskList1, subTaskList2);
+        assertEquals(manager.getTasks().getLast().getId(), manager2.getTasks().getLast().getId());
     }
 
 }

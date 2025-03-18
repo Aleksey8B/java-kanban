@@ -6,7 +6,6 @@ import tasks.*;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
@@ -16,10 +15,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         this.file = file;
     }
 
-    public  FileBackedTaskManager loadFromFile(File file) {
+    public static FileBackedTaskManager loadFromFile(File file) {
         FileBackedTaskManager manager = new FileBackedTaskManager(file);
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String rawTaskInfo = br.readLine();
+            manager.setTasksId(Integer.parseInt(br.readLine()));
             while (br.ready()) {
                 rawTaskInfo = br.readLine();
                 Task task = load(rawTaskInfo);
@@ -38,6 +38,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private void save() {
         try (FileWriter writer = new FileWriter(file, false)) {
             writer.write(CSVConstant.CSV_HEADER);
+            writer.write(getTaskId()+"\n");
             for (Task task : getTasks()) {
                 writer.write(task.toString());
             }
@@ -52,7 +53,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
     }
 
-    private Task load(String rawTaskInfo) {
+    private static Task load(String rawTaskInfo) {
         String[] taskInfo = rawTaskInfo.split(CSVConstant.CSV_DELIMITER);
         int id = Integer.parseInt(taskInfo[0]);
         TaskStatus status = TaskStatus.valueOf(taskInfo[1]);
@@ -73,9 +74,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 tmpEpic.setId(id);
                 tmpEpic.setStatus(status);
                 if (!taskInfo[6].isEmpty()) {
-                    String[] subTaskids = taskInfo[6].split(",");
+                    String[] subTaskIds = taskInfo[6].split(",");
                     ArrayList<Integer> arrSubTaskIds = new ArrayList<>();
-                    for (String str : subTaskids) {
+                    for (String str : subTaskIds) {
                         arrSubTaskIds.add(Integer.parseInt(str));
                     }
                     tmpEpic.setSubTasksId(arrSubTaskIds);
@@ -108,51 +109,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public List<Task> getAllTasks() {
-        return super.getAllTasks();
-    }
-
-    @Override
-    public List<Task> getTasks() {
-        return super.getTasks();
-    }
-
-    @Override
-    public List<Epic> getEpics() {
-        return super.getEpics();
-    }
-
-    @Override
-    public List<SubTask> getSubTasks() {
-        return super.getSubTasks();
-    }
-
-    @Override
-    public Task getTaskById(int taskId) {
-        return super.getTaskById(taskId);
-    }
-
-    @Override
-    public Epic getEpicById(int epicId) {
-        return super.getEpicById(epicId);
-    }
-
-    @Override
-    public SubTask getSubTaskById(int subTaskId) {
-        return super.getSubTaskById(subTaskId);
-    }
-
-    @Override
-    public List<SubTask> getEpicsSubTasks(Epic epic) {
-        return super.getEpicsSubTasks(epic);
-    }
-
-    @Override
-    public List<Task> getHistory() {
-        return super.getHistory();
-    }
-
-    @Override
     public void addSubTask(SubTask subTask) {
         super.addSubTask(subTask);
         save();
@@ -167,12 +123,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     @Override
     public void updateEpic(Epic epic) {
         super.updateEpic(epic);
-        save();
-    }
-
-    @Override
-    public void updateEpicStatus(Epic epic) {
-        super.updateEpicStatus(epic);
         save();
     }
 
