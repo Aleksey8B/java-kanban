@@ -28,7 +28,7 @@ public class TaskTest {
     public void tasksShouldBeEqualsById() {
         task1.setId(3);
         task2.setId(3);
-        assertNotEquals(task1.,task2);
+        assertNotEquals(task1,task2);
     }
 
     @Test
