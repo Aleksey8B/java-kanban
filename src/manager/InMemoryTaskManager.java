@@ -3,7 +3,7 @@ package manager;
 import tasks.Epic;
 import tasks.SubTask;
 import tasks.Task;
-import tasks.TaskStatus;
+import constant.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
-    private int tasksId;
-    private final Map<Integer, Task> tasks;
-    private final Map<Integer, Epic> epics;
-    private final Map<Integer, SubTask> subTasks;
+    protected int tasksId;
+    protected final Map<Integer, Task> tasks;
+    protected final Map<Integer, Epic> epics;
+    protected final Map<Integer, SubTask> subTasks;
     private final HistoryManager historyManager = Manager.getDefaultHistory();
 
     public InMemoryTaskManager() {
@@ -24,7 +24,7 @@ public class InMemoryTaskManager implements TaskManager {
         subTasks = new HashMap<>();
     }
 
-    private int getTasksId() {
+    protected int getTasksId() {
         return tasksId++;
     }
 
@@ -45,21 +45,6 @@ public class InMemoryTaskManager implements TaskManager {
         subTask.setId(getTasksId());
         subTasks.put(subTask.getId(),subTask);
         updateEpicStatus(epics.get(subTask.getEpicId()));
-    }
-
-    @Override
-    public List<Task> getAllTasks() {
-        ArrayList<Task> allTasks = new ArrayList<>();
-        for (int i = 0; i < (tasks.size() + epics.size() + subTasks.size()); i++) {
-            if (tasks.containsKey(i)) {
-                allTasks.add(tasks.get(i));
-            } else if (epics.containsKey(i)) {
-                allTasks.add(epics.get(i));
-            } else if (subTasks.containsKey(i)) {
-                allTasks.add(subTasks.get(i));
-            }
-        }
-        return allTasks;
     }
 
     @Override
@@ -96,8 +81,7 @@ public class InMemoryTaskManager implements TaskManager {
         epics.put(epic.getId(),epic);
     }
 
-    @Override
-    public void updateEpicStatus(Epic epic) {
+    private void updateEpicStatus(Epic epic) {
         ArrayList<SubTask> epicSubTasks = new ArrayList<>(getEpicsSubTasks(epic));
         int doneSubCount = 0;
         if (!epicSubTasks.isEmpty()) {
