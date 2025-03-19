@@ -33,6 +33,9 @@ public class InMemoryHistoryManager implements HistoryManager {
     @Override
     public void add(Task task) {
         if (task == null) return;
+        if (historyMap.containsValue(task)){
+            removeNode(historyMap.get(task.getId()));
+        }
         linkLast(task);
     }
 
