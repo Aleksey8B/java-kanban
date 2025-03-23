@@ -94,8 +94,8 @@ public class ManagerTest {
         historyManager.add(task2);
         historyManager.add(task1);
         List<Task> history = historyManager.getHistory();
-        assertEquals(task2,history.get(0));
         assertEquals(task1,history.get(1));
+        assertEquals(task2,history.get(0));
     }
 
     @Test

@@ -15,13 +15,14 @@ public class InMemoryTaskManager implements TaskManager {
     protected final Map<Integer, Task> tasks;
     protected final Map<Integer, Epic> epics;
     protected final Map<Integer, SubTask> subTasks;
-    private final HistoryManager historyManager = Manager.getDefaultHistory();
+    protected final HistoryManager historyManager;
 
     public InMemoryTaskManager() {
         tasksId = 0;
         tasks = new HashMap<>();
         epics = new HashMap<>();
         subTasks = new HashMap<>();
+        historyManager = Manager.getDefaultHistory();
     }
 
     protected int getTasksId() {
@@ -113,9 +114,8 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTaskById(int taskId) {
         if (tasks.containsKey(taskId)) {
-            Task taskTmp = tasks.get(taskId);
-            historyManager.add(taskTmp);
-            return taskTmp;
+            historyManager.add(tasks.get(taskId));
+            return tasks.get(taskId);
         }
         return null;
     }
@@ -123,9 +123,8 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Epic getEpicById(int epicId) {
         if (epics.containsKey(epicId)) {
-            Epic epicTmp = epics.get(epicId);
-            historyManager.add(epicTmp);
-            return epicTmp;
+            historyManager.add(epics.get(epicId));
+            return epics.get(epicId);
         }
         return null;
     }
@@ -133,9 +132,8 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public SubTask getSubTaskById(int subTaskId) {
         if (subTasks.containsKey(subTaskId)) {
-            SubTask subTaskTmp = subTasks.get(subTaskId);
-            historyManager.add(subTaskTmp);
-            return subTaskTmp;
+            historyManager.add(subTasks.get(subTaskId));
+            return subTasks.get(subTaskId);
         }
         return null;
     }
