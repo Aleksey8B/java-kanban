@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private static final Map<Integer, Node<Task>> historyMap = new HashMap<>();
+    private static final Map<Integer, Node> historyMap = new HashMap<>();
     private int historySize = 0;
-    private Node<Task> first;
-    private Node<Task> last;
+    private Node first;
+    private Node last;
 
     @Override
     public void add(Task task) {
@@ -33,7 +33,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private List<Task> getTasks() {
         List<Task> historyView = new ArrayList<>();
-        Node<Task> currentNode = first;
+        Node currentNode = first;
         while (currentNode != null) {
             historyView.add(currentNode.getCurrent());
             currentNode = currentNode.getNext();
@@ -42,8 +42,8 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private void linkLast(Task task) {
-        final Node<Task> lastNode = last;
-        final Node<Task> newNode = new Node<>(task, lastNode, null);
+        final Node lastNode = last;
+        final Node newNode = new Node(task, lastNode, null);
         last = newNode;
 
         if (lastNode == null) {
@@ -55,7 +55,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         historyMap.put(task.getId(), newNode);
     }
 
-    private void removeNode(Node<Task> node) {
+    private void removeNode(Node node) {
         if (historyMap.containsValue(node)) {
             if (node == first) {
                 first = node.getNext();
@@ -65,8 +65,8 @@ public class InMemoryHistoryManager implements HistoryManager {
                 last = node.getPrev();
                 node.getPrev().setNext(null);
             }
-            if(node.getPrev() != null) node.getPrev().setNext(node.getNext());
-            if(node.getNext() != null) node.getNext().setPrev(node.getPrev());
+            if (node.getPrev() != null) node.getPrev().setNext(node.getNext());
+            if (node.getNext() != null) node.getNext().setPrev(node.getPrev());
             historySize--;
         }
     }

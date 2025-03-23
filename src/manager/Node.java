@@ -1,33 +1,35 @@
 package manager;
 
-public class Node<Task> {
-    private final Task task;
-    private Node<Task> prev;
-    private Node<Task> next;
+import tasks.Task;
 
-    public Node(Task task, Node<Task> prev, Node<Task> next) {
+class Node {
+    private final Task task;
+    private Node prev;
+    private Node next;
+
+    Node(Task task, Node prev, Node next) {
         this.task = task;
         this.prev = prev;
         this.next = next;
     }
 
-    public Task getCurrent(){
+    public Task getCurrent() {
         return task;
     }
 
-    public Node<Task> getNext() {
+    public Node getNext() {
         return next;
     }
 
-    public Node<Task> getPrev() {
+    public Node getPrev() {
         return prev;
     }
 
-    public void setNext(Node<Task> next) {
+    public void setNext(Node next) {
         this.next = next;
     }
 
-    public void setPrev(Node<Task> prev) {
+    public void setPrev(Node prev) {
         this.prev = prev;
     }
 }
