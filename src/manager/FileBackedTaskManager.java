@@ -41,7 +41,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                         for (SubTask subTask : manager.getSubTasks()) {
                             Epic epic = manager.epics.get(subTask.getEpicId());
                             epic.addSubTask(subTask);
-                            manager.epics.put(epic.getId(), epic);
                         }
                     }
                     case "History list:" -> {

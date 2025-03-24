@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private static final Map<Integer, Node> historyMap = new HashMap<>();
-    private int historySize = 0;
+    private final Map<Integer, Node> historyMap = new HashMap<>();
     private Node first;
     private Node last;
 
@@ -52,7 +51,6 @@ public class InMemoryHistoryManager implements HistoryManager {
         } else {
             lastNode.setNext(newNode);
         }
-        historySize++;
         historyMap.put(task.getId(), newNode);
     }
 
@@ -68,7 +66,6 @@ public class InMemoryHistoryManager implements HistoryManager {
             }
             if (node.getPrev() != null) node.getPrev().setNext(node.getNext());
             if (node.getNext() != null) node.getNext().setPrev(node.getPrev());
-            historySize--;
         }
     }
 
