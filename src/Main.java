@@ -1,9 +1,6 @@
-import manager.Manager;
-import manager.TaskManager;
-import tasks.Epic;
-import tasks.SubTask;
-import tasks.Task;
-import tasks.TaskStatus;
+import manager.*;
+import tasks.*;
+import constant.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -58,6 +55,5 @@ public class Main {
         System.out.println(taskManager.getTaskById(task2.getId()));
         System.out.println(taskManager.getTaskById(task1.getId()));
         System.out.println(taskManager.getHistory());
-
     }
 }

@@ -1,5 +1,7 @@
 package tasks;
 
+import constant.TaskType;
+
 import java.util.ArrayList;
 
 public class Epic extends Task {
@@ -12,6 +14,10 @@ public class Epic extends Task {
 
     public ArrayList<Integer> getSubTasksId() {
         return subTasksId;
+    }
+
+    public void  setSubTasksId(ArrayList<Integer> subTasksIdArr) {
+        subTasksId.addAll(subTasksIdArr);
     }
 
     public void addSubTask(SubTask subTask) {
@@ -27,13 +33,17 @@ public class Epic extends Task {
     }
 
     @Override
+    public TaskType getType() {
+        return TaskType.EPIC;
+    }
+
+    @Override
     public String toString() {
-        return "\nEpic{" +
-                "id=" + getId() +
-                ", name='" + getName() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", status=" + getStatus() +
-                ", subTasksId=" + getSubTasksId() +
-                '}';
+        return String.format("%d;%s;%s;%s;%s\n",
+                getId(),
+                getStatus(),
+                getType(),
+                getName(),
+                getDescription());
     }
 }

@@ -17,11 +17,11 @@ public class TaskTest {
     @BeforeEach
     public void beforEach() {
         task1 = new Task("1","1");
-        task2 = new Task("2", "2");
+        task2 = new Task("1", "1");
         epic1 = new Epic("1","1");
-        epic2 = new Epic("2", "2");
+        epic2 = new Epic("1", "1");
         subTask1 = new SubTask("1","1");
-        subTask2 = new SubTask("2","2");
+        subTask2 = new SubTask("1","1");
     }
 
     @Test
